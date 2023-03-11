@@ -11,7 +11,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { selectUser } from "../../features/userSlice";
 import { async } from '@firebase/util';
-import { API_URL } from '../../properties';
+
 
 function MainQuestion() {
     
@@ -30,7 +30,7 @@ function MainQuestion() {
 
   useEffect(()=>{
     async function getQuestionDetails() {
-        await axios.get(`${API_URL}/api/question/${id}`).then((res)=>{
+        await axios.get(`/api/question/${id}`).then((res)=>{
             console.log(res.data[0])
             setQuestionData(res.data[0])
         }).catch((err)=>{
@@ -54,7 +54,7 @@ function MainQuestion() {
 //   }, []);
 async function getUpdatedAnswer() {
     await axios
-      .get(`${API_URL}/api/question/${id}`)
+      .get(`/api/question/${id}`)
       .then((res) => setQuestionData(res.data[0]))
       .catch((err) => console.log(err));
   }
@@ -72,7 +72,7 @@ const handleSubmit = async () => {
             },
           };
           await axios
-          .post(`${API_URL}/api/answer`, body, config)
+          .post("/api/answer", body, config)
           .then((res) => {
             console.log(res.data)
             alert("Answer added successfully");
@@ -93,7 +93,7 @@ const handleSubmit = async () => {
         comment: comment,
         user: user,
         };
-        await axios.post(`${API_URL}/api/comment/${id}`, body).then((res) => {
+        await axios.post(`/api/comment/${id}`, body).then((res) => {
             setComment("");
             setShow(false);
             getUpdatedAnswer();
@@ -132,7 +132,7 @@ const handleSubmit = async () => {
                             </div>
                         </div>
                         <div className='question-answer'>
-                        <p>{(questionData?.body)}</p>
+                        <p>{parse(questionData?.body)}</p>
                             <div className='author'>
                                 <small>asked {new Date(questionData?.created_at).toLocaleString()}</small>
                                 <div className='auth-details'>

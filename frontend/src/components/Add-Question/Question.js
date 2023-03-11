@@ -9,7 +9,7 @@ import {useNavigate} from 'react-router-dom';
 import { selectUser } from "../../features/userSlice";
 import { useSelector } from "react-redux";
 import axios from 'axios';
-import { API_URL } from '../../properties';
+
 
 
 function Question() {
@@ -36,7 +36,7 @@ function Question() {
         tag: JSON.stringify(tags),
         user: user,
       };
-      await axios.post(`${API_URL}/api/question`, bodyJSON)
+      await axios.post("/api/question", bodyJSON)
         .then((res) => {
           // console.log(res.data);
           alert("Question added successfully");
